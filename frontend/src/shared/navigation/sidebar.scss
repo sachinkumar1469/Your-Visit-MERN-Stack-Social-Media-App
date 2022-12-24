@@ -1,0 +1,16 @@
+.sidebar-nav{
+    margin: 15px 0px;
+    // margin-left: 5px;
+    width: 100%;
+    height: max-content;
+    border: 1px solid red;
+    
+}
+@media screen and (max-width:1024px) {
+   
+}
+@media screen and (max-width:600px) {
+    .sidebar-nav{
+        
+    }
+}
