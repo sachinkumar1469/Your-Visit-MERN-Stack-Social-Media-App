@@ -1,12 +1,13 @@
 main{
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 2.2fr 1fr;
+    grid-template-columns: 300px calc(100vw - 600px - 30px) 300px;
     padding-inline: 15px;
     margin-top: 4rem;
+    // border: 1px solid red;
     position: relative;
     >*{
-        border: 1px solid blue;
+        // border: 1px solid blue;
         overflow: hidden;
     }
     .sidebar{
@@ -25,18 +26,15 @@ main{
 }
 
 @media screen and (max-width:1024px) {
-   
+   main{
+    grid-template-columns: 180px calc(100vw - 360px - 30px) 180px;
+   }
 }
 @media screen and (max-width:600px) {
     main{
         grid-template-columns: 1fr;
         .sidebar{
-            position: fixed;
-            top: 4rem;
-            left: 0;
-            height: calc(100vh - 4rem);
-            width: 70vw;
-            background-color: #f0f2f5;
+            display: none;
         }
         .main-content{
             

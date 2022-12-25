@@ -36,3 +36,14 @@ code {
 .jc-center{
   justify-content: center;
 }
+.btn{
+  height: 2.5rem;
+  width: max-content;
+  padding-inline: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  font-family: 'Courier New', Courier, monospace;
+  transition: all 200ms ease-in;
+  overflow: hidden;
+}

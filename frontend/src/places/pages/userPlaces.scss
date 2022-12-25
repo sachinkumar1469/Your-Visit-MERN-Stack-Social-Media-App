@@ -1,0 +1,64 @@
+.user-places{
+    // border: 1px solid red;
+    .user-places-user-info{
+        width: 90%;
+        // border: 1px solid yellow;
+        height: 5rem;
+        overflow: hidden;
+        margin: 15px auto;
+        background-color: white;
+        border-radius: 15px;
+
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 0px 15px;
+        .user-item__image{
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #f0f2f5;;
+            img{
+                width: 100%;
+                // aspect-ratio: 1/1;
+            }  
+        }
+        .user-item__about{
+            // border: 1px solid red;
+            display: flex;
+            flex-direction: column;
+            color: black;
+            .user-item_name{
+                font-size: 1.5rem;
+            }
+            .user-item_places{
+                font-size: 0.9rem;
+                color: grey;
+            }
+        }
+    }
+}
+@media screen and (max-width:600px){
+    .user-places{
+        .user-places-user-info{
+           width: 95%;
+            .user-item__image{
+               
+                img{
+                   
+                }  
+            }
+            .user-item__about{
+                color: black;
+                .user-item_name{
+                    font-size: 1.3rem;
+                }
+                .user-item_places{
+                    font-size: 0.8rem;
+                    
+                }
+            }
+        }
+    }
+}

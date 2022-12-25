@@ -1,0 +1,98 @@
+.user-places-item{
+    width: 90%;
+    margin: 0px auto;
+    margin-bottom: 20px;
+
+    // border: 1px solid blue;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    background-color: white;
+    padding-bottom: 10px;
+    >*{
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        text-align: center;
+    }
+    .user-places-item-image{
+        width: 100%;
+        height: 20rem;
+        img{
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .user-places-item-title{
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+    .user-places-item-buttons{
+        display: flex;
+        gap: 15px;
+        .btn{
+            border: 1px solid hsl(350, 100%, 59%);
+            margin: 1px;
+            font-size: 1rem;
+        }
+        .view{
+            color: red;
+        }
+        .view:hover{
+            background-color:  hsl(350, 100%, 59%);
+            
+            color: white;
+            text{
+                transform: scale(1.1);
+            }
+        }
+        .edit{
+            background-color: hsl(350, 100%, 59%);
+            color: white;
+        }
+        .edit:hover{
+            color: hsl(350, 100%, 59%);
+            background-color: white;
+            border: 1px solid hsl(350, 100%, 59%);;
+        }
+        .delete{
+            background-color: red;
+            color: white;
+        }
+    }
+}
+@media screen and (max-width:1024px) {
+   
+}
+@media screen and (max-width:600px) {
+    .user-places-item{
+        width: 95%;
+        gap: 8px;
+        >*{
+            // border: 1px solid blue;
+        }
+        
+        .user-places-item-image{
+           
+            height: 13rem;
+            img{
+                
+            }
+        }
+        .user-places-item-title{
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .user-places-item-buttons{
+            
+            gap: 8px;
+            .btn{
+                border: 1px solid hsl(350, 100%, 59%);
+                margin: 1px;
+                font-size: 0.8rem;
+                height: 2rem;
+            }
+        }
+    }
+}

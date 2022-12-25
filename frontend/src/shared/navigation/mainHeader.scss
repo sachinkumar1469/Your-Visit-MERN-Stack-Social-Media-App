@@ -22,7 +22,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        // display: none;
+        display: none;
         svg{
             font-size: 3rem;
             cursor: pointer;
@@ -31,5 +31,14 @@
     }
     .main-navigation-title{
         font-size: 2.3rem;
+    }
+   
+    
+}
+@media screen and (max-width:600px) {
+    .main-header{
+        button{
+            display: flex;
+        }
     }
 }
