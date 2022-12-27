@@ -5,6 +5,7 @@ import {CSSTransition} from 'react-transition-group';
 import "./modal.scss";
 
 function ModalOverlay(props){
+    console.log(props);
     const content = (
         <div className={`modal ${props.className}`} style={props.style}>
             <header className={`modal_header ${props.headerClass}`}>

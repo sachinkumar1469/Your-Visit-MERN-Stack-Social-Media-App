@@ -38,6 +38,9 @@ code {
 }
 .btn{
   height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: max-content;
   padding-inline: 10px;
   border-radius: 10px;
@@ -46,4 +49,24 @@ code {
   font-family: 'Courier New', Courier, monospace;
   transition: all 200ms ease-in;
   overflow: hidden;
+}
+.primary{
+  background-color: hsl(350, 100%, 59%);
+  color: white !important;
+}
+.primary:hover{
+  background-color: white !important;
+  border-color: hsl(350, 100%, 59%) !important;
+  color: hsl(350, 100%, 59%) !important;
+}
+.auth-btn{
+ 
+  background-color: transparent;
+  border: 1px solid white !important;
+  color: white !important;
+}
+.auth-btn:hover{
+  background-color: white;
+  color: hsl(350, 100%, 59%) !important;
+  border: 1px solid transparent;
 }

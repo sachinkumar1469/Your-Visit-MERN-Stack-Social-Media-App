@@ -19,7 +19,7 @@ function BurgerMenu({toShow}) {
             <div><NavLink to="/" exact onClick={toggleToShow}><span className='nav-links-icon'><FaUsers/></span> <span>All Users</span></NavLink></div>
             <div><NavLink to="/123456/places" onClick={toggleToShow}><span className='nav-links-icon'><MdPlace/></span> <span>My Places</span></NavLink></div>
             <div><NavLink to="/places/new" onClick={toggleToShow}><span className='nav-links-icon'><MdOutlineWhereToVote/></span> <span>New Place</span></NavLink></div>
-            <div><NavLink to="/auth" onClick={toggleToShow}><span className='nav-links-icon'><RiLoginCircleFill/></span> <span>Auth</span></NavLink></div>
+            <div><NavLink to="/login" onClick={toggleToShow}><span className='nav-links-icon'><RiLoginCircleFill/></span> <span>Auth</span></NavLink></div>
         </div>
     </div>
   )

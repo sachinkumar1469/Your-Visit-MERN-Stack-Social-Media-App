@@ -1,0 +1,32 @@
+
+
+.input-wrapper{
+    display: flex;
+    // border: 1px solid black;
+    position: relative;
+    font-family: inherit;
+    width: 100%;
+    border-radius: 2px;
+    border: 2px solid black;
+    // border-radius: 8px;
+    // overflow: hidden;
+    
+    label{
+        position: absolute;
+        top: -15px;
+        left: 10px;
+        // border: 1px solid red;
+        font-family: inherit;
+        padding: 5px;
+        background-color: white;
+        color: grey;
+    }
+    .Input-input{
+        width: 100%;
+        padding: 0px 15px;
+        height: 3rem;
+        font-size: 1.2rem;
+        font-family: inherit;
+    }
+
+}

@@ -35,6 +35,12 @@
             border: 1px solid hsl(350, 100%, 59%);
             margin: 1px;
             font-size: 1rem;
+            >a{
+                color: inherit;
+                font-size: inherit;
+                text-decoration: none;
+                font-family: inherit;
+            }
         }
         .view{
             color: red;
@@ -62,6 +68,24 @@
         }
     }
 }
+
+.place-view-on-map-footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    .btn{
+        border: 1px solid hsl(350, 100%, 59%);
+        margin: 1px;
+        font-size: 1rem;
+        color: red;
+    }
+    .btn:hover{
+        background-color:  hsl(350, 100%, 59%);    
+        color: white;
+    }
+}
+
 @media screen and (max-width:1024px) {
    
 }
