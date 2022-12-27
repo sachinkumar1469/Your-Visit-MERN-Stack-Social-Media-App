@@ -1,0 +1,58 @@
+const placeList = [
+    {
+        id:"122333445",
+        imageUrl:"https://images.pexels.com/photos/3881102/pexels-photo-3881102.jpeg",
+        title:"Hey Unnati",
+        description:"Beautiful thick charming lady",
+        address:"Unkown House, Unkown Road, Unkown State, India",
+        userId:"123451",
+        coordinates:{lat:"-6.55521",lng:"-149.96366"},
+    },
+    {
+        id:"123334455",
+        imageUrl:"https://images.pexels.com/photos/3881102/pexels-photo-3881102.jpeg",
+        title:"Hey Unnati",
+        description:"Beautiful thick charming lady",
+        address:"Unkown House, Unkown Road, Unkown State, India",
+        userId:"123451",
+        coordinates:{lat:"-6.55521",lng:"-149.96366"},
+    },
+    {
+        id:"122333455",
+        imageUrl:"https://images.pexels.com/photos/3881102/pexels-photo-3881102.jpeg",
+        title:"Hey Unnati",
+        description:"Beautiful thick charming lady",
+        address:"Unkown House, Unkown Road, Unkown State, India",
+        userId:"123452",
+        coordinates:{lat:"-6.55521",lng:"-149.96366"},
+    },
+    {
+        id:"12239334455",
+        imageUrl:"https://images.pexels.com/photos/3881102/pexels-photo-3881102.jpeg",
+        title:"Hey Unnati",
+        description:"Beautiful thick charming lady",
+        address:"Unkown House, Unkown Road, Unkown State, India",
+        userId:"123452",
+        coordinates:{lat:"-6.55521",lng:"-149.96366"},
+    },
+    {
+        id:"120334455",
+        imageUrl:"https://images.pexels.com/photos/3881102/pexels-photo-3881102.jpeg",
+        title:"Hey Unnati",
+        description:"Beautiful thick charming lady",
+        address:"Unkown House, Unkown Road, Unkown State, India",
+        userId:"123453",
+        coordinates:{lat:"-6.55521",lng:"-149.96366"},
+    },
+    {
+        id:"1223337655",
+        imageUrl:"https://images.pexels.com/photos/3881102/pexels-photo-3881102.jpeg",
+        title:"Hey Unnati",
+        description:"Beautiful thick charming lady",
+        address:"Unkown House, Unkown Road, Unkown State, India",
+        userId:"123454",
+        coordinates:{lat:"-6.55521",lng:"-149.96366"},
+    },
+]
+
+module.exports = placeList;
