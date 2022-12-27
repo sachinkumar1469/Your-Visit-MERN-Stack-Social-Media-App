@@ -1,0 +1,46 @@
+const USERS = [
+    {
+      userId:"123451", 
+      name:"Unnati",
+      imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
+      lastPlaceImageUrl:"https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
+      placeCount:5
+    },
+    {
+      userId:"123452", 
+      name:"Unnati",
+      imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
+      lastPlaceImageUrl:"https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
+      placeCount:5
+    },
+    {
+      userId:"123453", 
+      name:"Unnati",
+      imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
+      lastPlaceImageUrl:"https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
+      placeCount:5
+    },
+    {
+      userId:"123454", 
+      name:"Unnati",
+      imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
+      lastPlaceImageUrl:"https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
+      placeCount:5
+    },
+    {
+      userId:"123455", 
+      name:"Unnati",
+      imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
+      lastPlaceImageUrl:"https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
+      placeCount:5
+    },
+    {
+      userId:"123456", 
+      name:"Unnati",
+      imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
+      lastPlaceImageUrl:"https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
+      placeCount:5
+    },
+  ]
+
+module.exports = USERS;
