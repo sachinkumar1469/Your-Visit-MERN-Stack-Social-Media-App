@@ -8,7 +8,7 @@
         // border: 1px solid red;
         border-radius: 10px;
         overflow: hidden;
-        
+        margin-bottom: 7px;
 
         a{
             // border: 1px solid blue;
@@ -34,6 +34,14 @@
             }
             .nav-links-icon{
                 width: 15%;
+                overflow: hidden;
+                
+            }
+            .nav-links-icon-img{
+                
+                
+                height: 90%;
+                aspect-ratio: 1/1;
                 img{
                     width: 100%;
                     height: 100%;
@@ -50,4 +58,5 @@
             }
         }
     }
+    
 }

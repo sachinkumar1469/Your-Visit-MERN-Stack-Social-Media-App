@@ -5,7 +5,13 @@ import Input from '../../shared/formComponents/Input';
 import useForm from '../../utils/useForm';
 
 function NewPlace() {
-  const [[title,setTitle],[address,setAddress],[description,setDescription]] = useForm("","","")
+  const [[title,setTitle],[address,setAddress],[description,setDescription],[image,setImage]] = useForm("","","",null)
+
+  const handleImageChange = (e)=>{
+    console.log(image);
+    setImage(e.target.file)
+  }
+
 
   return (
     <div className='add-new-place'>
@@ -43,6 +49,10 @@ function NewPlace() {
           validators={[]} 
           defaultValue={description}  
         />
+        <div className="input-wrapper input-new-place-img">
+          <label htmlFor="image">Image</label>
+          <input type="file" name="" id="image" onChange={handleImageChange}/>
+        </div>
         <button className='btn' onClick={(e)=>{e.preventDefault();console.log(title,address)}}>Add Place</button>
       </form>
     </div>

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import UserList from '../components/UserList';
+import axios from 'axios'
 
 function User() {
   const USERS = [
@@ -9,45 +10,22 @@ function User() {
       imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
       lastPlaceImageUrl:"https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
       placeCount:5
-    },
-    {
-      name:"Unnati",
-      id:"123456", 
-      imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
-      lastPlaceImageUrl:"https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg",
-      placeCount:5
-    },
-    {
-      name:"Unnati",
-      id:"123456", 
-      imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
-      lastPlaceImageUrl:"https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg",
-      placeCount:5
-    },
-    {
-      name:"Unnati",
-      id:"123456", 
-      imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
-      lastPlaceImageUrl:"https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
-      placeCount:5
-    },
-    {
-      name:"Unnati",
-      id:"123456", 
-      imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
-      lastPlaceImageUrl:"https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
-      placeCount:5
-    },
-    {
-      name:"Unnati",
-      id:"123456", 
-      imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
-      lastPlaceImageUrl:"https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
-      placeCount:5
-    },
+    }
   ]
+  
+  const [users,setUsers] = useState([]);
+
+  useEffect(()=>{
+    axios.get("http://localhost:8081/api/users/")
+    .then(result=>{
+      setUsers(result.data)
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  },[])
   return (
-    <UserList items={USERS}/>
+    <UserList items={users}/>
   )
 }
 

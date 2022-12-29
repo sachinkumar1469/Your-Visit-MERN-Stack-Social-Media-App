@@ -1,87 +1,77 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PlaceList from '../components/PlaceList';
-import {useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom';
+
+import axios from "axios"
 
 import "./userPlaces.scss"
 
 function UserPlaces() {
     const {userId} = useParams();
-    const user = {
-        name:"Unnati",
-        id:"123456", 
-        imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
-        lastPlaceImageUrl:"https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
-        placeCount:5
-    }
-    const placeList = [
-        {
-            id:"1223334455",
-            imageUrl:"https://images.pexels.com/photos/3881102/pexels-photo-3881102.jpeg",
-            title:"Hey Unnati",
-            description:"Beautiful thick charming lady",
-            address:"Unkown House, Unkown Road, Unkown State, India",
-            userId:"123456",
-            coordinates:{lat:"-6.55521",lg:"-149.96366"},
-        },
-        {
-            id:"1223334455",
-            imageUrl:"https://images.pexels.com/photos/3881102/pexels-photo-3881102.jpeg",
-            title:"Hey Unnati",
-            description:"Beautiful thick charming lady",
-            address:"Unkown House, Unkown Road, Unkown State, India",
-            userId:"123456",
-            coordinates:{lat:"-6.55521",lg:"-149.96366"},
-        },
-        {
-            id:"1223334455",
-            imageUrl:"https://images.pexels.com/photos/3881102/pexels-photo-3881102.jpeg",
-            title:"Hey Unnati",
-            description:"Beautiful thick charming lady",
-            address:"Unkown House, Unkown Road, Unkown State, India",
-            userId:"123456",
-            coordinates:{lat:"-6.55521",lg:"-149.96366"},
-        },
-        {
-            id:"1223334455",
-            imageUrl:"https://images.pexels.com/photos/3881102/pexels-photo-3881102.jpeg",
-            title:"Hey Unnati",
-            description:"Beautiful thick charming lady",
-            address:"Unkown House, Unkown Road, Unkown State, India",
-            userId:"123456",
-            coordinates:{lat:"-6.55521",lg:"-149.96366"},
-        },
-        {
-            id:"1223334455",
-            imageUrl:"https://images.pexels.com/photos/3881102/pexels-photo-3881102.jpeg",
-            title:"Hey Unnati",
-            description:"Beautiful thick charming lady",
-            address:"Unkown House, Unkown Road, Unkown State, India",
-            userId:"123456",
-            coordinates:{lat:"-6.55521",lg:"-149.96366"},
-        },
-        {
-            id:"1223334455",
-            imageUrl:"https://images.pexels.com/photos/3881102/pexels-photo-3881102.jpeg",
-            title:"Hey Unnati",
-            description:"Beautiful thick charming lady",
-            address:"Unkown House, Unkown Road, Unkown State, India",
-            userId:"123456",
-            coordinates:{lat:"-6.55521",lg:"-149.96366"},
-        },
-    ]
+
+    const [userLoader,setUserLoader] = useState(false)
+    const [placeLoader,setPlaceLoader] = useState(false)
+    const [selectedUser,setSelectedUser] = useState(null);
+    const [placeList,setPlaceList] = useState([]);
+
+
+    useEffect(()=>{
+        setUserLoader(true)
+        axios.get(`http://localhost:8081/api/users/${userId}`)
+        .then(result=>{
+            setUserLoader(false)
+            setSelectedUser(result.data);
+        })
+        .catch(err=>{
+            console.log("Unable to find selected user in UserPlace")
+        })
+    },[])
+
+
+    useEffect(()=>{
+        setPlaceLoader(true);
+        axios.get(`http://localhost:8081/api/places/user/${userId}`)
+        .then(result=>{
+            setPlaceLoader(false);
+            setPlaceList(result.data)
+        })
+        .catch(err=>{
+            console.log("Unable to find places of user in UserPlaces")
+        })
+    },[])
     return (
         <div className='user-places'>
-            <div className="user-places-user-info">
-                <div className="user-item__image" title={user.name}><img src={user.imageUrl} alt="" /></div>
+            { !userLoader ? (<div className="user-places-user-info">
+                <div className="user-item__image" title={selectedUser?.name}><img src={selectedUser?.imageUrl} alt="" /></div>
                 <div className='user-item__about'>
-                    <div className='user-item_name'>{user.name}</div>
-                    <div className='user-item_places'>{user.placeCount} {user.placeCount == 1 ? "Place" : "Places"}</div>
+                    <div className='user-item_name'>{selectedUser?.name}</div>
+                    <div className='user-item_places'>{selectedUser?.totalPlaces} {selectedUser?.totalPlaces == 1 ? "Place" : "Places"}</div>
                 </div>
                 
-            </div>
-            <PlaceList items={placeList}/>
+            </div>) : (<div className="user-places-user-info"> Loading user info.. </div>)}
+            { !placeLoader ?  <PlaceList items={placeList}/> : <div className='user-places-list'>Loading user places...</div>}
         </div>
     )
 }
 
 export default UserPlaces
+
+
+
+// const user = {
+//     name:"Unnati",
+//     id:"123456", 
+//     imageUrl:"https://pbs.twimg.com/media/FkmWba4UEAELwYq?format=jpg",
+// }
+// const placeLists = [
+//     {
+//         id:"1223334455",
+//         imageUrl:"https://images.pexels.com/photos/3881102/pexels-photo-3881102.jpeg",
+//         title:"Hey Unnati",
+//         description:"Beautiful thick charming lady",
+//         address:"Unkown House, Unkown Road, Unkown State, India",
+//         userId:"123456",
+//         coordinates:{lat:"-6.55521",lg:"-149.96366"},
+//     },
+    
+// ]

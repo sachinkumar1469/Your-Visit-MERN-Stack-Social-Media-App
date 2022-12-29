@@ -23,8 +23,8 @@ function App() {
     routes = (
       <>
               <Route exact path='/' element={<User/>}/>
-              <Route exact path='/:userId/places' element={<UserPlaces/>}></Route>
-              <Route exact path="/places/new" element={<NewPlace/>}></Route>
+              <Route path='/:userId/places' element={<UserPlaces/>}></Route>
+              <Route path="/places/new" element={<NewPlace/>}></Route>
               <Route path='/places/:updatePlaceId' element={<UpdatePlace/>}></Route>
       </>
     )

@@ -16,6 +16,25 @@
     flex-direction: column;
     gap: 18px;
 
+    .input-new-place-img{
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        padding-inline: 10px;
+        input{
+            // border: 1px solid red;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        input::file-selector-button{
+            background-color: transparent;
+            position: relative;
+            z-index: 4;
+            border: 1px solid black;
+            border-radius: 4px;
+        }
+    }
+
     background-color: white;
     font-family: 'Times New Roman', Times, serif;
     .btn{

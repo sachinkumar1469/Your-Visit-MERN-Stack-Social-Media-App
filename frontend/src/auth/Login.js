@@ -1,10 +1,32 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import useForm from '../utils/useForm';
 import Input from '../shared/formComponents/Input';
-import {authContext} from "../context/AuthContext"
+import {authContext} from "../context/AuthContext";
+import axios from 'axios'
+
+
 function Login() {
     const [[email,setEmail],[password,setPassword]] = useForm("","");
-    const {isLoggedIn,login,logout} = useContext(authContext)
+    const {isLoggedIn,currUser,setCurrUser} = useContext(authContext);
+    const [err,setErr] = useState(false);
+
+
+    const loginHandler = (e)=>{
+      if(email){
+        axios.post("http://localhost:8081/api/users/login",{
+          email,
+          password
+        })
+        .then((result)=>{
+          setCurrUser(result.data)
+        })
+        .catch(err=>{
+          setErr(true);
+          console.log("error in login");
+        })
+      }
+
+    }
   return (
     <div className='add-new-place'>
       <form className='new-place-form'>
@@ -30,8 +52,9 @@ function Login() {
           validators={[]} 
           defaultValue={password}  
         />
+        {err && <p style={{color:"red"}}>Invalid email or password!</p>}
         
-        <button className='btn' onClick={(e)=>{e.preventDefault();login()}}>Login</button>
+        <button className='btn' onClick={(e)=>{e.preventDefault();loginHandler()}}>Login</button>
       </form>
     </div>
   )
