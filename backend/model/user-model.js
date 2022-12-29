@@ -1,3 +1,60 @@
+const mongoose = require('mongoose');
+
+const Schema = mongoose.Schema;
+
+const user = new Schema({
+  name:{
+    type:Schema.Types.String,
+    required:true,
+  },
+  imageUrl:{
+    type:Schema.Types.String,
+    required:true,
+  },
+  email:{
+    type:Schema.Types.String,
+    required:true,
+  },
+  password:{
+    type:Schema.Types.String,
+    required:true,
+  },
+  places:[{type:Schema.Types.ObjectId,ref:"Places"}],
+  lastPlaceImageUrl:{
+    type:Schema.Types.String
+  }
+});
+
+
+module.exports = mongoose.model("Users",user);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const USERS = [
     {
       userId:"123451", 
@@ -43,4 +100,4 @@ const USERS = [
     },
   ]
 
-module.exports = USERS;
+// module.exports = USERS;

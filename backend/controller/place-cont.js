@@ -1,36 +1,50 @@
-let PLACES = require('../model/place-model')
+const placeModel = require('../model/place-model');
+const userModel = require('../model/user-model');
 
 const HttpError = require('../model/http-error');
 const {v4} = require('uuid');
 const { validationResult } = require('express-validator');
 const getCoord = require('../utils/coordinatesApi');
-
-exports.placesMain = (req,res,next)=>{
-    res.json(PLACES)
-}
+const mongoose = require('mongoose');
 
 exports.getPlacesByPlaceId = (req,res,next)=>{
-    console.log(req.params);
+
     const placeId = req.params.placeId;
-    const placeItem = PLACES.find((place)=>{
-        return place.placeId == placeId;
-    });
-
-    if(!placeItem){
-        throw new HttpError("Can't find place by given pid... Error using error model",302);
-    }
-
-    res.json(placeItem);
+    // console.log(placeId);
+    // const newId = new mongoose.Schema.Types.ObjectId(placeId);
+    // console.log(newId);
+    placeModel.findOne({_id:placeId})
+    .then(result=>{
+        res.json(result);
+    })
+    .catch(err=>{
+        console.log(err);
+        return next(new HttpError("Unable to find place by give place id",302));
+    })
 }
 
 exports.getPlacesByUserId = (req,res,next)=>{
-    console.log(req.params);
+    
     const userId = req.params.userId;
-    const userPlaces = PLACES.filter(place=>{
-        return place.userId == userId;
+    // placeModel.find({userId})
+    // .then(result=>{
+        
+    //     res.json(result);
+    // })
+    // .catch(err=>{
+    //     console.log(err);
+    //    return next(new HttpError("Unable to find places of given userid",302))
+    // })
+
+    userModel.findById({_id:userId}).populate('places')
+    .then(result=>{
+        console.log(result)
+        res.json(result.places)
+    })
+    .catch(err=>{
+        return next(new HttpError("Unbale to find places for given user id"))
     })
 
-    res.json(userPlaces);
 }
 
 exports.createPlace = (req,res,next)=>{
@@ -40,24 +54,48 @@ exports.createPlace = (req,res,next)=>{
     }
     // console.log(vaErr)
     const {title,description,address,userId,imageUrl} = req.body;
-    const newPlace = {
-        placeId: v4(),
+    const newPlace = new placeModel({
         title,
         description,
         address,
         coordinates:getCoord(address),
         userId,
         imageUrl
-    }
-    PLACES.push(newPlace);
-    console.log(PLACES.length);
-    res.status(201).json(newPlace);
+    });
+    newPlace.save().then((result)=>{
+        // console.log(result);
+        const pId = result._id;
+        userModel.updateOne({_id:userId},{
+            $push:{
+                places:pId
+            },
+            $set:{
+                lastPlaceImageUrl:result.imageUrl
+            }
+        })
+        .then(result=>{
+            res.json(result);
+        })
+        .catch(err=>{
+            console.log(err);
+            return next(new HttpError("Unbale to add place id in users array",302))
+        })
+    })
+    .catch(err=>{
+       return next(new HttpError("Unable to create new place",302))
+    })  
 }
 
 exports.deletePlaceById = (req,res,next)=>{
     const {placeId} = req.params;
-    PLACES = PLACES.filter(place=>place.placeId != placeId);
-    res.json({"Hello":"Deleted"})
+    console.log(placeId);
+    placeModel.deleteOne({_id:placeId}).then(result=>{
+        res.json(result);
+    })
+    .catch(err=>{
+        console.log(err);
+       return  next(new HttpError("Unable to delete place by Id",302));
+    })
 }
 
 exports.updatePlaceById = (req,res,next)=>{
@@ -66,14 +104,16 @@ exports.updatePlaceById = (req,res,next)=>{
         throw new HttpError("Invalid Inputs in patch",302);
     }
     const {placeId} = req.params;
-    const {title,description,address,coordinates,userId,imageUrl} = req.body;
+    const {title,description} = req.body;
     console.log(placeId);
-    const index = PLACES.findIndex(place=>place.placeId == placeId)
-    PLACES[index] = {
-        ...PLACES[index],
+    placeModel.updateOne({_id:placeId},{$set:{
         title,
         description
-    }
-    console.log(PLACES[index]);
-    res.json(PLACES[index])
+    }})
+    .then(result=>{
+        res.json(result)
+    })
+    .catch(err=>{
+       return next(new HttpError("Unable to update place by Id",302));
+    })
 }

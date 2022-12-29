@@ -3,10 +3,28 @@ const bodyParser = require('body-parser');
 
 const placeRoutes = require('./routes/places-route');
 const userRoutes = require("./routes/users-route");
-const HttpError = require("./model/http-error")
+const HttpError = require("./model/http-error");
+
+const mongoose = require('mongoose');
 
 const app = express();
-app.listen(8081);
+
+mongoose.connect('mongodb+srv://sachinyadav1469:Sachin%40123@cluster0.my3twen.mongodb.net/yourvisit?retryWrites=true&w=majority')
+.then(result=>{
+    // console.log(result);
+    app.listen(8081);
+})
+.catch(err=>{
+    console.log("Unable to connect to database!")
+})
+
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+})
+
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());

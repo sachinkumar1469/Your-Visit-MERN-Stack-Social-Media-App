@@ -1,3 +1,43 @@
+const Schema = require('mongoose').Schema;
+const mongoose = require('mongoose')
+const places = new Schema({
+    title:{
+        type:Schema.Types.String,
+        required:true
+    },
+    description:{
+        type:Schema.Types.String,
+        required:true
+    },
+    address:{
+        type:Schema.Types.String,
+        required:true
+    },
+    imageUrl:{
+        type:Schema.Types.String,
+        required:true
+    },
+    userId:{
+        type:Schema.Types.ObjectId,
+        required:true,
+        ref: "Users"
+    },
+    coordinates:{
+        lat:{
+            type:Schema.Types.Number,
+            required:true
+        },
+        lng:{
+            type:Schema.Types.Number,
+            required:true,
+        }
+    }
+});
+
+module.exports = mongoose.model("Places",places)
+
+
+
 const placeList = [
     {
         placeId:"122333445",
@@ -55,4 +95,4 @@ const placeList = [
     },
 ]
 
-module.exports = placeList;
+// module.exports = placeList;
