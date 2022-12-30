@@ -1,13 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PlaceList from '../components/PlaceList';
 import {useParams} from 'react-router-dom';
 
 import axios from "axios"
 
 import "./userPlaces.scss"
+import { authContext } from '../../context/AuthContext';
 
 function UserPlaces() {
     const {userId} = useParams();
+
+    const {currUser} = useContext(authContext);
+
+    let isOwner = false;
+
+    if(currUser?.id == userId){
+        isOwner = true;
+    }
 
     const [userLoader,setUserLoader] = useState(false)
     const [placeLoader,setPlaceLoader] = useState(false)
@@ -17,7 +26,7 @@ function UserPlaces() {
 
     useEffect(()=>{
         setUserLoader(true)
-        axios.get(`http://localhost:8081/api/users/${userId}`)
+        axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}`)
         .then(result=>{
             setUserLoader(false)
             setSelectedUser(result.data);
@@ -30,7 +39,7 @@ function UserPlaces() {
 
     useEffect(()=>{
         setPlaceLoader(true);
-        axios.get(`http://localhost:8081/api/places/user/${userId}`)
+        axios.get(`${process.env.REACT_APP_API_URL}/api/places/user/${userId}`)
         .then(result=>{
             setPlaceLoader(false);
             setPlaceList(result.data)
@@ -49,7 +58,7 @@ function UserPlaces() {
                 </div>
                 
             </div>) : (<div className="user-places-user-info"> Loading user info.. </div>)}
-            { !placeLoader ?  <PlaceList items={placeList}/> : <div className='user-places-list'>Loading user places...</div>}
+            { !placeLoader ?  <PlaceList items={placeList} isOwner={isOwner}/> : <div className='user-places-list'>Loading user places...</div>}
         </div>
     )
 }

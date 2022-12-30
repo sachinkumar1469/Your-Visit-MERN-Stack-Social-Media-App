@@ -1,20 +1,35 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import "./placeitem.scss";
 import Modal from '../../shared/UIElements/Modal';
 import Map from '../../shared/UIElements/Map';
 import map from '../../shared/UIElements/map.png'
-import { Link, Navigate,redirect } from 'react-router-dom';
+import { Link, Navigate,redirect, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import {authContext} from '../../context/AuthContext'
 
-const PlaceItem = ({item}) => {
+const PlaceItem = ({item,isOwner}) => {
+  const navigate = useNavigate();
+  const {currUser,token} = useContext(authContext);
+  console.log(isOwner);
   const [showMap,setShowMap] = useState(false);
   const [deletePlace,setDeletePlace] = useState(false)
   const mapHandler = ()=>{
     setShowMap(!showMap);
   }
   const deleteHandler = (e)=>{
-    setDeletePlace(false)
-    console.log("Yes Delete");
+    setDeletePlace(false);
+    axios.delete(`${process.env.REACT_APP_API_URL}/api/places/${item._id}`,{
+      headers:{
+        "Authorization":`Bearer ${token}`
+      }
+    })
+    .then(result=>{
+      navigate(`${currUser.id}/places`)
+    })
+    .catch(err=>{
+      console.log(err);
+    })
   }
   return (
     <>
@@ -63,8 +78,8 @@ const PlaceItem = ({item}) => {
       </div>
       <div className="user-places-item-buttons">
         <button className='btn view' onClick={mapHandler}>VIEW ON MAP</button>
-        <button className='btn edit'> <Link to={`/places/${item.id}`}> EDIT </Link></button>
-        <button className='btn delete' onClick={(e)=>{setDeletePlace(!deletePlace)}}>DELETE</button>
+        { isOwner && <button className='btn edit'> <Link to={`/places/${item._id}`}> EDIT </Link></button>}
+        { isOwner && <button className='btn delete' onClick={(e)=>{setDeletePlace(!deletePlace)}}>DELETE</button>}
       </div>
     </div>
     </>

@@ -3,7 +3,7 @@ import "./placeList.scss";
 
 import PlaceItem from './PlaceItem';
 
-function PlaceList({items}) {
+function PlaceList({items,isOwner}) {
   // console.log(items)
   if(items.length == 0){
     return (
@@ -15,7 +15,7 @@ function PlaceList({items}) {
   return (
     <div className='user-places-list'>
       {items.map((item,index)=>{
-        return <PlaceItem key={`sadfsfs${index}`} item={item}/>
+        return <PlaceItem key={`sadfsfs${index}`} item={item} isOwner={isOwner}/>
       })}
     </div>
   )

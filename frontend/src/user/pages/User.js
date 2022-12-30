@@ -16,7 +16,7 @@ function User() {
   const [users,setUsers] = useState([]);
 
   useEffect(()=>{
-    axios.get("http://localhost:8081/api/users/")
+    axios.get(`${process.env.REACT_APP_API_URL}/api/users/`)
     .then(result=>{
       setUsers(result.data)
     })

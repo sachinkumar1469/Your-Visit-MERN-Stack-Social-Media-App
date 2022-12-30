@@ -7,18 +7,20 @@ import axios from 'axios'
 
 function Login() {
     const [[email,setEmail],[password,setPassword]] = useForm("","");
-    const {isLoggedIn,currUser,setCurrUser} = useContext(authContext);
+    const {isLoggedIn,currUser,setCurrUser,setToken} = useContext(authContext);
     const [err,setErr] = useState(false);
 
 
     const loginHandler = (e)=>{
       if(email){
-        axios.post("http://localhost:8081/api/users/login",{
+        axios.post(`${process.env.REACT_APP_API_URL}/api/users/login`,{
           email,
           password
         })
         .then((result)=>{
           setCurrUser(result.data)
+          setToken(result.data.token);
+          console.log(result);
         })
         .catch(err=>{
           setErr(true);
