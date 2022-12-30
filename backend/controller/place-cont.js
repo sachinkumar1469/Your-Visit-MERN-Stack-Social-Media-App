@@ -7,6 +7,8 @@ const { validationResult } = require('express-validator');
 const getCoord = require('../utils/coordinatesApi');
 const mongoose = require('mongoose');
 
+
+
 exports.getPlacesByPlaceId = (req,res,next)=>{
 
     const placeId = req.params.placeId;
@@ -48,12 +50,13 @@ exports.getPlacesByUserId = (req,res,next)=>{
 }
 
 exports.createPlace = (req,res,next)=>{
+    const imageUrl = `http://localhost:8081/images/${req.file.filename}`
     const vaErr = validationResult(req);
     if(vaErr.array().length){
-        throw new HttpError("Invalid Inputs",302);
+        throw new HttpError("Invalid Inputs");
     }
     // console.log(vaErr)
-    const {title,description,address,userId,imageUrl} = req.body;
+    const {title,description,address,userId} = req.body;
     const newPlace = new placeModel({
         title,
         description,
@@ -89,12 +92,27 @@ exports.createPlace = (req,res,next)=>{
 exports.deletePlaceById = (req,res,next)=>{
     const {placeId} = req.params;
     console.log(placeId);
-    placeModel.deleteOne({_id:placeId}).then(result=>{
-        res.json(result);
+
+    placeModel.findByIdAndDelete({_id:placeId})
+    .then(result=>{
+        // console.log(result);
+        const userId = result.userId;
+        userModel.updateOne({_id:userId},{
+            $pull:{
+                places:placeId
+            }
+        })
+        .then(resultt=>{
+            console.log(resultt)
+            res.json(resultt);
+
+        })
+        .catch(err=>{
+            console.log("Unbale to delete from an array");
+        })
     })
     .catch(err=>{
-        console.log(err);
-       return  next(new HttpError("Unable to delete place by Id",302));
+        console.log("find by id error")
     })
 }
 

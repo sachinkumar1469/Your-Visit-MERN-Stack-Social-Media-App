@@ -1,5 +1,9 @@
 const { v4 } = require('uuid');
 
+const jwt = require('jsonwebtoken')
+
+const bcrypt = require('bcrypt');
+
 const {validationResult} = require('express-validator');
 const HttpError = require("../model/http-error");
 
@@ -33,15 +37,34 @@ exports.userMain = async (req,res,next)=>{
 
 exports.userLogin = (req,res,next)=>{
     const {email,password} = req.body;
-    userModel.findOne({email,password})
+    userModel.findOne({email})
     .then(result=>{
-        const {name,imageUrl,_id} = result;
-        const response = {
-            name,
-            imageUrl,
-            id:_id
-        }
-        res.json(response);
+        const oldPass = result.password;
+        const userId = result._id;
+        bcrypt.compare(password,oldPass)
+        .then(isTrue=>{
+            if(!isTrue){
+                return next(new HttpError("Password mismatch!"))
+            }
+            const {name,imageUrl,_id} = result;
+            const response = {
+                name,
+                imageUrl,
+                id:_id
+            }
+            let token;
+            try{
+                token = jwt.sign({userId:userId,email},'supersecretdontshare',{expiresIn:'1h'})
+            } catch(err){
+                return next(err);
+            }
+            response.token = token;
+            
+            res.json(response);
+        })
+        .catch(err=>{
+            console.log("Unbale to compare password in login")
+        })
     })
     .catch(err=>{
         return next(new HttpError("Unable to find user using email and password",302));
@@ -53,17 +76,36 @@ exports.userSignup = (req,res,next)=>{
     if(!valErr.isEmpty()){
         throw new HttpError("Invalid input in signup",302);
     }
-    
-    const {name,email,password,imageUrl} = req.body;
-    const newUser = new userModel({name,email,password,imageUrl,places:[],lastPlaceImageUrl:""});
 
-    newUser.save().then(result=>{
-        res.json(result);
+    const imageUrl = `http://localhost:8081/images/${req.file.filename}`;
+    
+    const {name,email,password} = req.body;
+
+    bcrypt.hash(password,12)
+    .then(hashedPass=>{
+        console.log(hashedPass);
+        const newUser = new userModel({name,email,password:hashedPass,imageUrl,places:[],lastPlaceImageUrl:""});
+        newUser.save().then(result=>{
+            let token;
+            try{
+                token = jwt.sign({userId:result._id,email:result.email},'supersecretdontshare',{expiresIn:'1h'})
+            } catch(err) {
+                return next(new Error("Unable to signup due to jwt token generation"))
+            }
+            res.json({id:result._id,email:result.email,name:result.name,imageUrl:result.imageUrl,token});
+        })
+        .catch(err=>{
+            console.log(err);
+            console.log("Unable to create new user!");
+            next(new HttpError("Unable to create new user",302))
+        })
     })
     .catch(err=>{
-        console.log("Unable to create new user!");
-        next(new HttpError("Unable to create new user",302))
+        console.log("Unable to hash password")
+        return next(new HttpError("Unable to hash password"));
     })
+
+
 }
 
 exports.getUserById = (req,res,next)=>{

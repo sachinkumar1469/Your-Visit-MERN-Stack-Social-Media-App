@@ -1,9 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs')
 
 const placeRoutes = require('./routes/places-route');
 const userRoutes = require("./routes/users-route");
 const HttpError = require("./model/http-error");
+const path = require('path')
+
+const multer = require('multer')
 
 const mongoose = require('mongoose');
 
@@ -18,12 +22,17 @@ mongoose.connect('mongodb+srv://sachinyadav1469:Sachin%40123@cluster0.my3twen.mo
     console.log("Unable to connect to database!")
 })
 
+
+app.use(express.static(path.join(require.main.filename,"..","uploads")))
+
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Origin,X-Requested-With,Accept,Authorization');
     next();
 })
+
+
 
 
 app.use(bodyParser.urlencoded({extended:false}));
@@ -37,6 +46,12 @@ app.use((req,res,next)=>{
 })
 
 app.use((error,req,res,next)=>{
+    if(req.file){
+        const p = path.join('uploads','images',req.file.filename)
+        fs.unlink(p,(err)=>{
+            console.log(err);
+        })
+    }
     if(res.headerSent){
         return next(error);
     }
