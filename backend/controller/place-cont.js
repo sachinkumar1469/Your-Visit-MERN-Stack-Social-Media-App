@@ -50,7 +50,7 @@ exports.getPlacesByUserId = (req,res,next)=>{
 }
 
 exports.createPlace = (req,res,next)=>{
-    const imageUrl = `http://localhost:8081/images/${req.file.filename}`
+    const imageUrl = `http://103.4.14.176:8081/images/${req.file.filename}`
     const vaErr = validationResult(req);
     if(vaErr.array().length){
         throw new HttpError("Invalid Inputs");

@@ -77,7 +77,7 @@ exports.userSignup = (req,res,next)=>{
         throw new HttpError("Invalid input in signup",302);
     }
 
-    const imageUrl = `http://localhost:8081/images/${req.file.filename}`;
+    const imageUrl = `http://103.4.14.176:8081/images/${req.file.filename}`;
     
     const {name,email,password} = req.body;
 
